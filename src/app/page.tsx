@@ -353,37 +353,65 @@ export default function Home() {
                 <>
                   <h2 className="font-heading text-3xl font-bold mb-2">Reserve a Session</h2>
                   <form className="space-y-5 font-sans mt-6" onSubmit={handleBookingSubmit}>
-                    <div>
-                      <label className="block text-sm font-medium mb-1.5 text-[var(--color-cream)]/90">Full Name</label>
-                      <input type="text" name="name" required className="w-full bg-[var(--color-espresso)]/50 border border-[var(--color-cream)]/20 rounded-xl px-4 py-3 text-[var(--color-cream)]" />
-                    </div>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-sm font-medium mb-1.5 text-[var(--color-cream)]/90">Date</label>
-                        <input 
-                          type="date" 
-                          name="date" 
-                          required 
-                          onChange={(e) => setSelectedDate(e.target.value)}
-                          min={new Date().toISOString().split('T')[0]}
-                          className="w-full bg-[var(--color-espresso)]/50 border border-[#FFFDD0]/20 rounded-xl px-4 py-3 text-[#FFFDD0] [color-scheme:dark]" 
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium mb-1.5 text-[#FFFDD0]/90">Time</label>
-                        <select name="time" required className="w-full bg-[var(--color-espresso)]/50 border border-[#FFFDD0]/20 rounded-xl px-4 py-3 text-[#FFFDD0]">
-                          {availableSlots.length > 0 ? (
-                            availableSlots.map((slot) => (
-                              <option key={slot.value} value={slot.value}>{slot.label}</option>
-                            ))
-                          ) : (
-                            <option value="" disabled>No sessions left today</option>
-                          )}
-                        </select>
-                      </div>
-                    </div>
-                    <button type="submit" className="w-full bg-[var(--color-emerald-accent)] text-white font-medium py-4 rounded-xl shadow-lg mt-4 transition-all">Submit</button>
-                  </form>
+  {/* Full Name */}
+  <div>
+    <label className="block text-sm font-medium mb-1.5 text-[var(--color-cream)]/90">Full Name</label>
+    <input 
+      type="text" 
+      name="name" 
+      required 
+      placeholder="Jane Doe"
+      className="w-full bg-[var(--color-espresso)]/50 border border-[var(--color-cream)]/20 rounded-xl px-4 py-3 text-[var(--color-cream)] focus:outline-none focus:border-[var(--color-emerald-accent)] transition-colors" 
+    />
+  </div>
+
+  {/* 👇 RESTORED: Phone Number Section */}
+  <div>
+    <label className="block text-sm font-medium mb-1.5 text-[var(--color-cream)]/90">Phone Number</label>
+    <input 
+      type="tel" 
+      name="phone" 
+      required 
+      placeholder="+91 98765 43210"
+      className="w-full bg-[var(--color-espresso)]/50 border border-[var(--color-cream)]/20 rounded-xl px-4 py-3 text-[var(--color-cream)] focus:outline-none focus:border-[var(--color-emerald-accent)] transition-colors" 
+    />
+  </div>
+
+  {/* Date & Time Grid */}
+  <div className="grid grid-cols-2 gap-4">
+    <div>
+      <label className="block text-sm font-medium mb-1.5 text-[var(--color-cream)]/90">Date</label>
+      <input 
+        type="date" 
+        name="date" 
+        required 
+        onChange={(e) => setSelectedDate(e.target.value)}
+        min={new Date().toISOString().split('T')[0]}
+        className="w-full bg-[var(--color-espresso)]/50 border border-[#FFFDD0]/20 rounded-xl px-4 py-3 text-[#FFFDD0] [color-scheme:dark]" 
+      />
+    </div>
+    <div>
+      <label className="block text-sm font-medium mb-1.5 text-[#FFFDD0]/90">Time</label>
+      <select 
+        name="time" 
+        required 
+        className="w-full bg-[var(--color-espresso)]/50 border border-[#FFFDD0]/20 rounded-xl px-4 py-3 text-[#FFFDD0]"
+      >
+        {availableSlots.length > 0 ? (
+          availableSlots.map((slot) => (
+            <option key={slot.value} value={slot.value}>{slot.label}</option>
+          ))
+        ) : (
+          <option value="" disabled>No sessions left today</option>
+        )}
+      </select>
+    </div>
+  </div>
+
+  <button type="submit" className="w-full bg-[var(--color-emerald-accent)] hover:bg-emerald-600 text-white font-medium py-4 rounded-xl shadow-lg mt-4 transition-all">
+    Submit Reservation
+  </button>
+</form>
                 </>
               ) : (
                 <div className="flex flex-col items-center justify-center text-center py-8">
