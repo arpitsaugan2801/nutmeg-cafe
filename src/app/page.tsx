@@ -31,14 +31,23 @@ const reviewsData = [
 ];
 
 export default function Home() {
-  // ... Keep your heroRef and scrollYProgress here ...
+  // 1. Ref for the scroll animation
+  const heroRef = useRef<HTMLElement>(null);
 
-  // --- ADD THESE 3 THINGS HERE ---
-  
-  // A. This remembers what date the user clicked
+  // 2. Scroll progress math
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end end"]
+  });
+
+  // 3. State for booking and carousels
   const [selectedDate, setSelectedDate] = useState(""); 
+  const [isBookingOpen, setIsBookingOpen] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [menuIndex, setMenuIndex] = useState(0);
+  const [artIndex, setArtIndex] = useState(0);
 
-  // B. This is the "Filter" that checks the clock
+  // 4. Time Slot Logic: Filters out past times if "Today" is selected
   const getTimeSlots = () => {
     const allSlots = [
       { label: "11:00 AM", value: "11:00 AM", hour: 11 },
@@ -46,28 +55,43 @@ export default function Home() {
     ];
 
     const today = new Date();
-    // This turns the current time into a format like "2024-05-10"
     const todayString = today.toISOString().split('T')[0];
 
+    // If user picks today, only show slots where the hour is in the future
     if (selectedDate === todayString) {
       const currentHour = today.getHours();
-      // If it's 12:00 PM right now, it removes the 11:00 AM slot
       return allSlots.filter(slot => slot.hour > currentHour);
     }
     return allSlots;
   };
 
-  // C. This holds the final list of valid times
   const availableSlots = getTimeSlots();
 
-  // --- THE BRAIN ENDS HERE ---
+  // 5. Carousel Images & Handlers
+  const artImages = [
+    "https://images.squarespace-cdn.com/content/v1/64ff1596bf78f9494792a3d3/1706623500082-5BWDZ4DJGZUO9G3CF7IL/y1ROqIcJHWc.jpg?format=500w",
+    "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?q=80&w=1000&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=1000&auto=format&fit=crop"
+  ];
 
-  return (
-    <main className="min-h-screen w-full bg-[var(--color-coffee)] text-[#FFFDD0]">
-      {/* ... your sections start here ... */}
+  const nextArt = () => setArtIndex((prev) => (prev + 1) % artImages.length);
+  const prevArt = () => setArtIndex((prev) => (prev - 1 + artImages.length) % artImages.length);
+  const nextMenu = () => setMenuIndex((prev) => (prev + 1) % menuItems.length);
+  const prevMenu = () => setMenuIndex((prev) => (prev - 1 + menuItems.length) % menuItems.length);
 
-      {/* Background Vignette */}
-      <div className="fixed inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,transparent_0%,rgba(62,39,35,0.7)_100%)] z-0" />
+  // 6. Form Submission Handler
+  const handleBookingSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const result = await submitReservation(formData);
+    if (result.success) {
+      setIsSubmitted(true);
+    } else {
+      alert("Failed to send booking. Check the console.");
+    }
+  };
+
+  // --- BRAIN ENDS HERE ---
 
       {/* 1. HERO SECTION (STICKY SCROLL) */}
       <section ref={heroRef} className="relative h-[300vh] w-full bg-[var(--color-coffee)]">
