@@ -51,15 +51,19 @@ export default function Home() {
   const getTimeSlots = () => {
     const allSlots = [
       { label: "11:00 AM", value: "11:00 AM", hour: 11 },
-      { label: "1:00 PM", value: "1:00 PM", hour: 13 },
+      { label: "01:00 PM", value: "1:00 PM", hour: 13 },
+      { label: "03:00 PM", value: "3:00 PM", hour: 15 },
+      { label: "05:00 PM", value: "5:00 PM", hour: 17 },
+      { label: "07:00 PM", value: "7:00 PM", hour: 19 },
+      { label: "09:00 PM", value: "9:00 PM", hour: 21 },
     ];
 
     const today = new Date();
     const todayString = today.toISOString().split('T')[0];
 
-    // If user picks today, only show slots where the hour is in the future
     if (selectedDate === todayString) {
       const currentHour = today.getHours();
+      // Only show slots that haven't started yet
       return allSlots.filter(slot => slot.hour > currentHour);
     }
     return allSlots;
@@ -356,25 +360,13 @@ export default function Home() {
   {/* Full Name */}
   <div>
     <label className="block text-sm font-medium mb-1.5 text-[var(--color-cream)]/90">Full Name</label>
-    <input 
-      type="text" 
-      name="name" 
-      required 
-      placeholder="Jane Doe"
-      className="w-full bg-[var(--color-espresso)]/50 border border-[var(--color-cream)]/20 rounded-xl px-4 py-3 text-[var(--color-cream)] focus:outline-none focus:border-[var(--color-emerald-accent)] transition-colors" 
-    />
+    <input type="text" name="name" required placeholder="Jane Doe" className="w-full bg-[var(--color-espresso)]/50 border border-[var(--color-cream)]/20 rounded-xl px-4 py-3 text-[var(--color-cream)] focus:outline-none focus:border-[var(--color-emerald-accent)] transition-colors" />
   </div>
 
-  {/* 👇 RESTORED: Phone Number Section */}
+  {/* Phone Number */}
   <div>
     <label className="block text-sm font-medium mb-1.5 text-[var(--color-cream)]/90">Phone Number</label>
-    <input 
-      type="tel" 
-      name="phone" 
-      required 
-      placeholder="+91 98765 43210"
-      className="w-full bg-[var(--color-espresso)]/50 border border-[var(--color-cream)]/20 rounded-xl px-4 py-3 text-[var(--color-cream)] focus:outline-none focus:border-[var(--color-emerald-accent)] transition-colors" 
-    />
+    <input type="tel" name="phone" required placeholder="+91 98765 43210" className="w-full bg-[var(--color-espresso)]/50 border border-[var(--color-cream)]/20 rounded-xl px-4 py-3 text-[var(--color-cream)] focus:outline-none focus:border-[var(--color-emerald-accent)] transition-colors" />
   </div>
 
   {/* Date & Time Grid */}
@@ -391,12 +383,8 @@ export default function Home() {
       />
     </div>
     <div>
-      <label className="block text-sm font-medium mb-1.5 text-[#FFFDD0]/90">Time</label>
-      <select 
-        name="time" 
-        required 
-        className="w-full bg-[var(--color-espresso)]/50 border border-[#FFFDD0]/20 rounded-xl px-4 py-3 text-[#FFFDD0]"
-      >
+      <label className="block text-sm font-medium mb-1.5 text-[#FFFDD0]/90">Time Slot</label>
+      <select name="time" required className="w-full bg-[var(--color-espresso)]/50 border border-[#FFFDD0]/20 rounded-xl px-4 py-3 text-[#FFFDD0]">
         {availableSlots.length > 0 ? (
           availableSlots.map((slot) => (
             <option key={slot.value} value={slot.value}>{slot.label}</option>
@@ -406,6 +394,16 @@ export default function Home() {
         )}
       </select>
     </div>
+  </div>
+
+  {/* 👇 RESTORED: Session Type Dropdown */}
+  <div>
+    <label className="block text-sm font-medium mb-1.5 text-[var(--color-cream)]/90">Session Type</label>
+    <select name="sessionType" required className="w-full bg-[var(--color-espresso)]/50 border border-[var(--color-cream)]/20 rounded-xl px-4 py-3 text-[var(--color-cream)] focus:outline-none focus:border-[var(--color-emerald-accent)] transition-colors">
+      <option value="clay_pottery">Clay Pottery Session</option>
+      <option value="art_session">Art / Painting Session</option>
+      <option value="both">Both (Combo)</option>
+    </select>
   </div>
 
   <button type="submit" className="w-full bg-[var(--color-emerald-accent)] hover:bg-emerald-600 text-white font-medium py-4 rounded-xl shadow-lg mt-4 transition-all">
