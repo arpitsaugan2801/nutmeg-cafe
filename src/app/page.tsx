@@ -354,12 +354,12 @@ export default function Home() {
                   <form className="space-y-5 font-sans" onSubmit={handleBookingSubmit}>
                     <div>
                       <label className="block text-sm font-medium mb-1.5 text-[var(--color-cream)]/90">Full Name</label>
-                      <input type="text" name="name" required className="w-full bg-[var(--color-espresso)]/50 border border-[var(--color-cream)]/20 rounded-xl px-4 py-3 text-[var(--color-cream)] placeholder-[var(--color-cream)]/30 focus:outline-none focus:border-[var(--color-emerald-accent)] transition-colors" placeholder="Jane Doe" />
+                      <input type="text" name="name" required className="w-full bg-[var(--color-espresso)]/50 border border-[var(--color-cream)]/20 rounded-xl px-4 py-3 text-[var(--color-cream)]" />
                     </div>
 
                     <div>
                       <label className="block text-sm font-medium mb-1.5 text-[var(--color-cream)]/90">Phone Number</label>
-                      <input type="tel" name="phone" required className="w-full bg-[var(--color-espresso)]/50 border border-[var(--color-cream)]/20 rounded-xl px-4 py-3 text-[var(--color-cream)] placeholder-[var(--color-cream)]/30 focus:outline-none focus:border-[var(--color-emerald-accent)] transition-colors" placeholder="+91 98765 43210" />
+                      <input type="tel" name="phone" required className="w-full bg-[var(--color-espresso)]/50 border border-[var(--color-cream)]/20 rounded-xl px-4 py-3 text-[var(--color-cream)]" />
                     </div>
 
                     <div className="grid grid-cols-2 gap-4">
@@ -379,9 +379,7 @@ export default function Home() {
                         <select name="time" required className="w-full bg-[var(--color-espresso)]/50 border border-[#FFFDD0]/20 rounded-xl px-4 py-3 text-[#FFFDD0]">
                           {availableSlots.length > 0 ? (
                             availableSlots.map((slot) => (
-                              <option key={slot.value} value={slot.value}>
-                                {slot.label}
-                              </option>
+                              <option key={slot.value} value={slot.value}>{slot.label}</option>
                             ))
                           ) : (
                             <option value="" disabled>No sessions left today</option>
@@ -390,16 +388,7 @@ export default function Home() {
                       </div>
                     </div>
 
-                    <div>
-                      <label className="block text-sm font-medium mb-1.5 text-[var(--color-cream)]/90">Session Type</label>
-                      <select name="sessionType" required className="w-full bg-[var(--color-espresso)]/50 border border-[var(--color-cream)]/20 rounded-xl px-4 py-3 text-[var(--color-cream)] focus:outline-none focus:border-[var(--color-emerald-accent)] transition-colors appearance-none">
-                        <option value="pottery">Blue Pottery</option>
-                        <option value="painting">Canvas Painting</option>
-                        <option value="both">Both</option>
-                      </select>
-                    </div>
-
-                    <button type="submit" className="w-full bg-[var(--color-emerald-accent)] hover:bg-[var(--color-emerald-hover)] text-white font-medium py-4 rounded-xl shadow-lg mt-4 transition-all">
+                    <button type="submit" className="w-full bg-[var(--color-emerald-accent)] hover:bg-emerald-600 text-white font-medium py-4 rounded-xl shadow-lg mt-4 transition-all">
                       Submit Reservation
                     </button>
                   </form>
@@ -408,10 +397,9 @@ export default function Home() {
                 <div className="flex flex-col items-center justify-center text-center py-8">
                   <CheckCircle size={72} className="text-[var(--color-emerald-accent)] mb-6" />
                   <h2 className="font-heading text-3xl font-bold mb-4">Booking Confirmed!</h2>
-                  <p className="text-[var(--color-cream)]/80 mb-8 font-sans max-w-sm mx-auto">We look forward to seeing you at Nutmeg café.</p>
                   <button
                     onClick={() => { setIsSubmitted(false); setIsBookingOpen(false); }}
-                    className="w-full bg-[var(--color-emerald-accent)] hover:bg-[var(--color-emerald-hover)] text-white font-medium py-4 rounded-xl shadow-lg transition-all"
+                    className="w-full bg-[var(--color-emerald-accent)] text-white font-medium py-4 rounded-xl shadow-lg"
                   >
                     Done
                   </button>
