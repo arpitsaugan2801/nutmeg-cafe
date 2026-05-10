@@ -31,42 +31,36 @@ const reviewsData = [
 ];
 
 export default function Home() {
-  // --- SCROLL ANIMATION MATH ---
-  const heroRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end end"]
-  });
+  // ... Keep your heroRef and scrollYProgress here ...
 
-  // --- STATE & CAROUSEL VARIABLES (These were missing!) ---
-  const [isBookingOpen, setIsBookingOpen] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [menuIndex, setMenuIndex] = useState(0);
-  const [artIndex, setArtIndex] = useState(0);
+  // --- ADD THESE 3 THINGS HERE ---
+  
+  // A. This remembers what date the user clicked
+  const [selectedDate, setSelectedDate] = useState(""); 
 
-  const artImages = [
-    "https://images.squarespace-cdn.com/content/v1/64ff1596bf78f9494792a3d3/1706623500082-5BWDZ4DJGZUO9G3CF7IL/y1ROqIcJHWc.jpg?format=500w",
-    "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?q=80&w=1000&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=1000&auto=format&fit=crop"
-  ];
+  // B. This is the "Filter" that checks the clock
+  const getTimeSlots = () => {
+    const allSlots = [
+      { label: "11:00 AM", value: "11:00 AM", hour: 11 },
+      { label: "1:00 PM", value: "1:00 PM", hour: 13 },
+    ];
 
-  const nextArt = () => setArtIndex((prev) => (prev + 1) % artImages.length);
-  const prevArt = () => setArtIndex((prev) => (prev - 1 + artImages.length) % artImages.length);
+    const today = new Date();
+    // This turns the current time into a format like "2024-05-10"
+    const todayString = today.toISOString().split('T')[0];
 
-  const nextMenu = () => setMenuIndex((prev) => (prev + 1) % menuItems.length);
-  const prevMenu = () => setMenuIndex((prev) => (prev - 1 + menuItems.length) % menuItems.length);
-
-  // --- FORM HANDLER ---
-  const handleBookingSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const result = await submitReservation(formData);
-    if (result.success) {
-      setIsSubmitted(true);
-    } else {
-      alert("Failed to send booking. Check the console.");
+    if (selectedDate === todayString) {
+      const currentHour = today.getHours();
+      // If it's 12:00 PM right now, it removes the 11:00 AM slot
+      return allSlots.filter(slot => slot.hour > currentHour);
     }
+    return allSlots;
   };
+
+  // C. This holds the final list of valid times
+  const availableSlots = getTimeSlots();
+
+  // --- THE BRAIN ENDS HERE ---
 
   return (
     <main className="min-h-screen w-full bg-[var(--color-coffee)] text-[#FFFDD0]">
@@ -359,16 +353,20 @@ export default function Home() {
 />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium mb-1.5 text-[var(--color-cream)]/90">Time Slot</label>
-                        <select name="time" required className="w-full bg-[var(--color-espresso)]/50 border border-[var(--color-cream)]/20 rounded-xl px-4 py-3 text-[var(--color-cream)] focus:outline-none focus:border-[var(--color-emerald-accent)] transition-colors appearance-none">
-                          <option value="11:00 AM">11:00 AM</option>
-                          <option value="1:00 PM">1:00 PM</option>
-                          <option value="3:00 PM">3:00 PM</option>
-                          <option value="5:00 PM">5:00 PM</option>
-                          <option value="7:00 PM">7:00 PM</option>
-                          <option value="9:00 PM">9:00 PM</option>
-                        </select>
-                      </div>
+  <label className="block text-sm font-medium mb-1.5 text-[#FFFDD0]/90">Time</label>
+  <select name="time" required className="w-full bg-[var(--color-espresso)]/50 border border-[#FFFDD0]/20 rounded-xl px-4 py-3 text-[#FFFDD0]">
+    {/* If there are slots available, show them. If not, show a 'Sold Out' message */}
+    {availableSlots.length > 0 ? (
+      availableSlots.map((slot) => (
+        <option key={slot.value} value={slot.value}>
+          {slot.label}
+        </option>
+      ))
+    ) : (
+      <option value="" disabled>No sessions left today</option>
+    )}
+  </select>
+</div>
                     </div>
 
                     <div>
