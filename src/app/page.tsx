@@ -366,31 +366,28 @@ export default function Home() {
                       <div>
                         <label className="block text-sm font-medium mb-1.5 text-[var(--color-cream)]/90">Date</label>
                         <input 
-  type="date" 
-  name="date" 
-  required 
-  // This updates our 'selectedDate' whenever you click a day
-  onChange={(e) => setSelectedDate(e.target.value)}
-  // This prevents picking past dates in the calendar UI
-  min={new Date().toISOString().split('T')[0]}
-  className="w-full bg-[var(--color-espresso)]/50 border border-[#FFFDD0]/20 rounded-xl px-4 py-3 text-[#FFFDD0] [color-scheme:dark]" 
-/>
+                          type="date" 
+                          name="date" 
+                          required 
+                          onChange={(e) => setSelectedDate(e.target.value)}
+                          min={new Date().toISOString().split('T')[0]}
+                          className="w-full bg-[var(--color-espresso)]/50 border border-[#FFFDD0]/20 rounded-xl px-4 py-3 text-[#FFFDD0] [color-scheme:dark]" 
+                        />
                       </div>
                       <div>
-  <label className="block text-sm font-medium mb-1.5 text-[#FFFDD0]/90">Time</label>
-  <select name="time" required className="w-full bg-[var(--color-espresso)]/50 border border-[#FFFDD0]/20 rounded-xl px-4 py-3 text-[#FFFDD0]">
-    {/* If there are slots available, show them. If not, show a 'Sold Out' message */}
-    {availableSlots.length > 0 ? (
-      availableSlots.map((slot) => (
-        <option key={slot.value} value={slot.value}>
-          {slot.label}
-        </option>
-      ))
-    ) : (
-      <option value="" disabled>No sessions left today</option>
-    )}
-  </select>
-</div>
+                        <label className="block text-sm font-medium mb-1.5 text-[#FFFDD0]/90">Time</label>
+                        <select name="time" required className="w-full bg-[var(--color-espresso)]/50 border border-[#FFFDD0]/20 rounded-xl px-4 py-3 text-[#FFFDD0]">
+                          {availableSlots.length > 0 ? (
+                            availableSlots.map((slot) => (
+                              <option key={slot.value} value={slot.value}>
+                                {slot.label}
+                              </option>
+                            ))
+                          ) : (
+                            <option value="" disabled>No sessions left today</option>
+                          )}
+                        </select>
+                      </div>
                     </div>
 
                     <div>
@@ -432,7 +429,9 @@ function ReviewCard({ text, author }: { text: string; author: string }) {
   return (
     <div className="flex flex-col gap-2 bg-[var(--color-coffee)]/50 px-8 py-6 rounded-2xl shadow-sm border border-[var(--color-cream)]/10 shrink-0 min-w-[320px]">
       <div className="flex gap-1 shrink-0 mb-1">
-        {[...Array(5)].map((_, i) => <Star key={i} size={16} className="fill-[var(--color-emerald-accent)] text-[var(--color-emerald-accent)]" />)}
+        {[...Array(5)].map((_, i) => (
+          <Star key={i} size={16} className="fill-[var(--color-emerald-accent)] text-[var(--color-emerald-accent)]" />
+        ))}
       </div>
       <p className="text-base font-medium text-[var(--color-cream)]/90 font-sans italic">"{text}"</p>
       <span className="text-sm font-bold text-[var(--color-cream)] mt-2">— {author}</span>
