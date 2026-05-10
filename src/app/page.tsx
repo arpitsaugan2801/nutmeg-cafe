@@ -349,19 +349,11 @@ export default function Home() {
               {!isSubmitted ? (
                 <>
                   <h2 className="font-heading text-3xl font-bold mb-2">Reserve a Session</h2>
-                  <p className="text-[var(--color-cream)]/70 mb-8 font-sans">Fill out the details to book your creative escape.</p>
-
-                  <form className="space-y-5 font-sans" onSubmit={handleBookingSubmit}>
+                  <form className="space-y-5 font-sans mt-6" onSubmit={handleBookingSubmit}>
                     <div>
                       <label className="block text-sm font-medium mb-1.5 text-[var(--color-cream)]/90">Full Name</label>
                       <input type="text" name="name" required className="w-full bg-[var(--color-espresso)]/50 border border-[var(--color-cream)]/20 rounded-xl px-4 py-3 text-[var(--color-cream)]" />
                     </div>
-
-                    <div>
-                      <label className="block text-sm font-medium mb-1.5 text-[var(--color-cream)]/90">Phone Number</label>
-                      <input type="tel" name="phone" required className="w-full bg-[var(--color-espresso)]/50 border border-[var(--color-cream)]/20 rounded-xl px-4 py-3 text-[var(--color-cream)]" />
-                    </div>
-
                     <div className="grid grid-cols-2 gap-4">
                       <div>
                         <label className="block text-sm font-medium mb-1.5 text-[var(--color-cream)]/90">Date</label>
@@ -387,22 +379,14 @@ export default function Home() {
                         </select>
                       </div>
                     </div>
-
-                    <button type="submit" className="w-full bg-[var(--color-emerald-accent)] hover:bg-emerald-600 text-white font-medium py-4 rounded-xl shadow-lg mt-4 transition-all">
-                      Submit Reservation
-                    </button>
+                    <button type="submit" className="w-full bg-[var(--color-emerald-accent)] text-white font-medium py-4 rounded-xl shadow-lg mt-4 transition-all">Submit</button>
                   </form>
                 </>
               ) : (
                 <div className="flex flex-col items-center justify-center text-center py-8">
                   <CheckCircle size={72} className="text-[var(--color-emerald-accent)] mb-6" />
                   <h2 className="font-heading text-3xl font-bold mb-4">Booking Confirmed!</h2>
-                  <button
-                    onClick={() => { setIsSubmitted(false); setIsBookingOpen(false); }}
-                    className="w-full bg-[var(--color-emerald-accent)] text-white font-medium py-4 rounded-xl shadow-lg"
-                  >
-                    Done
-                  </button>
+                  <button onClick={() => { setIsSubmitted(false); setIsBookingOpen(false); }} className="w-full bg-[var(--color-emerald-accent)] text-white font-medium py-4 rounded-xl mt-8">Done</button>
                 </div>
               )}
             </motion.div>
@@ -417,9 +401,7 @@ function ReviewCard({ text, author }: { text: string; author: string }) {
   return (
     <div className="flex flex-col gap-2 bg-[var(--color-coffee)]/50 px-8 py-6 rounded-2xl shadow-sm border border-[var(--color-cream)]/10 shrink-0 min-w-[320px]">
       <div className="flex gap-1 shrink-0 mb-1">
-        {[...Array(5)].map((_, i) => (
-          <Star key={i} size={16} className="fill-[var(--color-emerald-accent)] text-[var(--color-emerald-accent)]" />
-        ))}
+        {[...Array(5)].map((_, i) => <Star key={i} size={16} className="fill-[var(--color-emerald-accent)] text-[var(--color-emerald-accent)]" />)}
       </div>
       <p className="text-base font-medium text-[var(--color-cream)]/90 font-sans italic">"{text}"</p>
       <span className="text-sm font-bold text-[var(--color-cream)] mt-2">— {author}</span>
