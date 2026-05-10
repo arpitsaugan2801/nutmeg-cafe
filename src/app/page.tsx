@@ -347,7 +347,16 @@ export default function Home() {
                     <div className="grid grid-cols-2 gap-4">
                       <div>
                         <label className="block text-sm font-medium mb-1.5 text-[var(--color-cream)]/90">Date</label>
-                        <input type="date" name="date" required className="w-full bg-[var(--color-espresso)]/50 border border-[var(--color-cream)]/20 rounded-xl px-4 py-3 text-[var(--color-cream)] focus:outline-none focus:border-[var(--color-emerald-accent)] transition-colors [color-scheme:dark]" />
+                        <input 
+  type="date" 
+  name="date" 
+  required 
+  // This updates our 'selectedDate' whenever you click a day
+  onChange={(e) => setSelectedDate(e.target.value)}
+  // This prevents picking past dates in the calendar UI
+  min={new Date().toISOString().split('T')[0]}
+  className="w-full bg-[var(--color-espresso)]/50 border border-[#FFFDD0]/20 rounded-xl px-4 py-3 text-[#FFFDD0] [color-scheme:dark]" 
+/>
                       </div>
                       <div>
                         <label className="block text-sm font-medium mb-1.5 text-[var(--color-cream)]/90">Time Slot</label>
