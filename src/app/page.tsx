@@ -93,6 +93,9 @@ export default function Home() {
 
   // --- BRAIN ENDS HERE ---
 
+  return (
+      <main className="min-h-screen w-full bg-[var(--color-coffee)] text-[#FFFDD0]">
+      
       {/* 1. HERO SECTION (STICKY SCROLL) */}
       <section ref={heroRef} className="relative h-[300vh] w-full bg-[var(--color-coffee)]">
         <div className="sticky top-0 h-screen w-full overflow-hidden">
